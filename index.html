@@ -13,7 +13,7 @@
 </head>
 <body class="bg-zinc-50 font-sans">
 
-    <!-- Navigation, Hero, Solutions, Industries remain the same as your current code -->
+    <!-- Navigation, Hero, Solutions, Industries sections (same as before) -->
 
     <!-- Contact Form -->
     <section id="contact" class="py-24 bg-slate-900 text-white">
@@ -40,11 +40,7 @@
 
     <script>
         const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY';   // ←←← PASTE YOUR FULL ANON KEY HERE
-
-        console.log("=== Form Debug Started ===");
-        console.log("URL:", SUPABASE_URL);
-        console.log("Key length:", SUPABASE_ANON_KEY.length);
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY;   // ← Make sure your full anon key is here
 
         const form = document.getElementById('contactForm');
         const status = document.getElementById('status');
@@ -52,8 +48,6 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log("Submit button clicked!");
-
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             status.textContent = '';
@@ -62,16 +56,9 @@
             const email = document.getElementById('email').value.trim();
             const message = document.getElementById('message').value.trim();
 
-            if (!SUPABASE_ANON_KEY) {
-                status.innerHTML = '<span class="text-red-400">❌ Anon key is missing. Please check the code.</span>';
-                console.error("Anon key is empty!");
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-                return;
-            }
+            console.log("Sending:", { name, email, message });
 
             try {
-                console.log("Sending data to Supabase...");
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
                     method: 'POST',
                     headers: {
@@ -83,20 +70,18 @@
                 });
 
                 const responseText = await res.text();
-                console.log("Response status:", res.status);
-                console.log("Response body:", responseText);
+                console.log("Status:", res.status);
+                console.log("Response:", responseText);
 
                 if (res.ok) {
                     status.innerHTML = '<span class="text-emerald-400">✅ Message sent successfully! Thank you.</span>';
                     form.reset();
-                    console.log("Success!");
                 } else {
                     status.innerHTML = `<span class="text-red-400">❌ Failed (${res.status}). Check console.</span>`;
-                    console.error("Error response:", responseText);
                 }
             } catch (err) {
-                status.innerHTML = '<span class="text-red-400">❌ Network error. Check console for details.</span>';
-                console.error("Catch error:", err);
+                status.innerHTML = '<span class="text-red-400">❌ Network error. Check console.</span>';
+                console.error("Error:", err);
             }
 
             submitBtn.disabled = false;
