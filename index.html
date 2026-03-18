@@ -73,13 +73,15 @@
                 console.log("Status:", res.status);
                 console.log("Response:", responseText);
 
-                if (res.ok) {
-                    status.innerHTML = '<span class="text-emerald-400">✅ Message sent successfully! Thank you.</span>';
-                    form.reset();
-                } else {
-                    status.innerHTML = `<span class="text-red-400">❌ Failed (${res.status}). Check console.</span>`;
-                }
-            } catch (err) {
+            if (res.ok) {
+            status.innerHTML = '<span class="text-emerald-400 font-medium">✅ Message sent successfully! Thank you.</span>';
+            form.reset();
+              console.log("Form submitted successfully");
+}         else {
+    const errorText = await res.text().catch(() => "Unknown error");
+    status.innerHTML = `<span class="text-red-400 font-medium">❌ Failed to send (${res.status}). ${errorText}</span>`;
+    console.error("Submit failed:", res.status, errorText);
+}            } catch (err) {
                 status.innerHTML = '<span class="text-red-400">❌ Network error. Check console.</span>';
                 console.error("Error:", err);
             }
