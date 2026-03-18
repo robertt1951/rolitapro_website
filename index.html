@@ -13,7 +13,104 @@
 </head>
 <body class="bg-zinc-50 font-sans">
 
-    <!-- Navigation, Hero, Solutions, Industries sections (same as before) -->
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow">R</div>
+                <span class="text-3xl font-semibold tracking-tight text-slate-800">RolitaPro</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-slate-600 font-medium">
+                <a href="#home" class="hover:text-emerald-600 transition-colors">Home</a>
+                <a href="#solutions" class="hover:text-emerald-600 transition-colors">Solutions</a>
+                <a href="#industries" class="hover:text-emerald-600 transition-colors">Industries</a>
+                <a href="#contact" class="hover:text-emerald-600 transition-colors">Contact</a>
+            </div>
+
+            <button onclick="toggleMenu()" class="md:hidden text-3xl text-slate-700">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="px-6 py-8 flex flex-col gap-6 text-lg font-medium text-slate-700">
+                <a href="#home" onclick="toggleMenu()" class="hover:text-emerald-600">Home</a>
+                <a href="#solutions" onclick="toggleMenu()" class="hover:text-emerald-600">Solutions</a>
+                <a href="#industries" onclick="toggleMenu()" class="hover:text-emerald-600">Industries</a>
+                <a href="#contact" onclick="toggleMenu()" class="hover:text-emerald-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero-bg min-h-screen flex items-center pt-20 text-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                SaaS Built Specifically<br>for Your Trade
+            </h1>
+            <p class="text-2xl md:text-3xl text-emerald-100 mb-8">Purpose-built software for micro-niche businesses</p>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl mb-12">
+                We develop modern, easy-to-use SaaS applications for small-to-medium dental practices, 
+                plumbing contractors, electrical contractors, and similar specialized service businesses.
+            </p>
+            <a href="#solutions" class="bg-white text-slate-900 px-10 py-5 rounded-3xl font-semibold text-lg inline-block hover:bg-emerald-50 transition-all shadow-xl">
+                Explore Solutions
+            </a>
+        </div>
+    </section>
+
+    <!-- Solutions -->
+    <section id="solutions" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Built for How You Actually Work</h2>
+            <p class="text-center text-slate-600 text-xl mb-16 max-w-md mx-auto">Every feature solves real daily problems in your trade.</p>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="card bg-white border border-slate-100 p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-8">📅</div>
+                    <h3 class="text-2xl font-semibold mb-4">Smart Scheduling</h3>
+                    <p class="text-slate-600">Automated booking, reminders, and calendar sync that respects field schedules.</p>
+                </div>
+                <div class="card bg-white border border-slate-100 p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-8">💰</div>
+                    <h3 class="text-2xl font-semibold mb-4">Invoicing & Payments</h3>
+                    <p class="text-slate-600">Professional invoices, online payments, and automatic follow-ups.</p>
+                </div>
+                <div class="card bg-white border border-slate-100 p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-8">🔧</div>
+                    <h3 class="text-2xl font-semibold mb-4">Job & Crew Management</h3>
+                    <p class="text-slate-600">Real-time job tracking, technician assignment, and customer updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section id="industries" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Industries We Serve</h2>
+            <p class="text-center text-slate-600 text-xl mb-16">Tailored SaaS that fits your specific workflow.</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card bg-white p-10 rounded-3xl border border-slate-100 text-center">
+                    <div class="text-7xl mb-8">🦷</div>
+                    <h3 class="text-2xl font-semibold mb-3">Dental Practices</h3>
+                    <p class="text-slate-600">Patient scheduling, recall, insurance tracking, and simple clinical tools.</p>
+                </div>
+                <div class="card bg-white p-10 rounded-3xl border border-slate-100 text-center">
+                    <div class="text-7xl mb-8">🔧</div>
+                    <h3 class="text-2xl font-semibold mb-3">Plumbing Contractors</h3>
+                    <p class="text-slate-600">Service calls, routing, material tracking, and fast on-site invoicing.</p>
+                </div>
+                <div class="card bg-white p-10 rounded-3xl border border-slate-100 text-center">
+                    <div class="text-7xl mb-8">⚡</div>
+                    <h3 class="text-2xl font-semibold mb-3">Electrical Contractors</h3>
+                    <p class="text-slate-600">Permit tracking, job costing, crew scheduling, and compliance tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Form -->
     <section id="contact" class="py-24 bg-slate-900 text-white">
@@ -22,7 +119,7 @@
             <p class="text-emerald-100 text-xl mb-12">Let’s build the perfect SaaS solution for your business.</p>
             
             <form id="contactForm" class="space-y-6">
-                <input type="text" id="name" placeholder="Your Full Name" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
+                <input type="text" id="name" placeholder="Your Name" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
                 <input type="email" id="email" placeholder="Business Email" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
                 <textarea id="message" rows="5" placeholder="Tell us about your needs..." required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white"></textarea>
                 
@@ -37,7 +134,16 @@
     <footer class="bg-slate-950 text-slate-400 py-12 text-center">
         <p>© 2026 RolitaPro Technologies LLC. All rights reserved.</p>
     </footer>
-            form.addEventListener('submit', async (e) => {
+
+    <script>
+        const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY'; // ← Your anon key
+
+        const form = document.getElementById('contactForm');
+        const status = document.getElementById('status');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
@@ -74,26 +180,6 @@
                 }
             } catch (err) {
                 status.innerHTML = '<span class="text-red-400 font-medium">❌ Could not connect to server. Please try again.</span>';
-                console.error("Submit error:", err);
-            }
-
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Send Message';
-        });
-    <script>
-        const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY;   // ← Make sure your full anon key is here
-
-        const form = document.getElementById('contactForm');
-        const status = document.getElementById('status');
-        const submitBtn = document.getElementById('submitBtn');
-
-
-    status.innerHTML = `<span class="text-red-400 font-medium">❌ Failed to send (${res.status}). ${errorText}</span>`;
-    console.error("Submit failed:", res.status, errorText);
-}            } catch (err) {
-                status.innerHTML = '<span class="text-red-400">❌ Network error. Check console.</span>';
-                console.error("Error:", err);
             }
 
             submitBtn.disabled = false;
