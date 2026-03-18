@@ -119,7 +119,7 @@
             <p class="text-emerald-100 text-xl mb-12">Let’s build the perfect SaaS solution for your business.</p>
             
             <form id="contactForm" class="space-y-6">
-                <input type="text" id="name" placeholder="Your Name" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
+                <input type="text" id="name" placeholder="Your Full Name" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
                 <input type="email" id="email" placeholder="Business Email" required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white">
                 <textarea id="message" rows="5" placeholder="Tell us about your needs..." required class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-3xl focus:outline-none focus:border-emerald-500 text-white"></textarea>
                 
@@ -137,7 +137,9 @@
 
     <script>
         const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY'; // ← Your anon key
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY';
+
+        const RESEND_API_KEY = 're_f1spR22U_J1U7Q9UJy1sbdpd4GJTT7CgS;   // ← PASTE YOUR RESEND API KEY HERE
 
         const form = document.getElementById('contactForm');
         const status = document.getElementById('status');
@@ -161,7 +163,8 @@
             }
 
             try {
-                const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+                // Save to Supabase
+                const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -171,12 +174,34 @@
                     body: JSON.stringify({ name, email, message })
                 });
 
-                if (res.ok) {
+                // Send email via Resend
+                const emailRes = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${RESEND_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        from: 'RolitaPro <onboarding@resend.dev>',
+                        to: ['robertt1951@gmail.com'],           // ← Change to your email
+                        subject: `New Contact Form from ${name}`,
+                        html: `
+                            <h2>New Contact Form Submission</h2>
+                            <p><strong>Name:</strong> ${name}</p>
+                            <p><strong>Email:</strong> ${email}</p>
+                            <p><strong>Message:</strong></p>
+                            <p>${message.replace(/\n/g, '<br>')}</p>
+                            <hr>
+                            <p><small>Received at ${new Date().toLocaleString()}</small></p>
+                        `
+                    })
+                });
+
+                if (dbRes.ok && emailRes.ok) {
                     status.innerHTML = '<span class="text-emerald-400 font-medium">✅ Message sent successfully! Thank you.</span>';
                     form.reset();
                 } else {
-                    const errorText = await res.text().catch(() => '');
-                    status.innerHTML = `<span class="text-red-400 font-medium">❌ Failed (${res.status}). ${errorText}</span>`;
+                    status.innerHTML = '<span class="text-red-400 font-medium">❌ Failed to send. Please try again.</span>';
                 }
             } catch (err) {
                 status.innerHTML = '<span class="text-red-400 font-medium">❌ Could not connect to server. Please try again.</span>';
