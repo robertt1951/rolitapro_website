@@ -25,6 +25,7 @@
                 <a href="#home" class="hover:text-emerald-600 transition-colors">Home</a>
                 <a href="#solutions" class="hover:text-emerald-600 transition-colors">Solutions</a>
                 <a href="#industries" class="hover:text-emerald-600 transition-colors">Industries</a>
+                <a href="#about" class="hover:text-emerald-600 transition-colors">About</a>
                 <a href="#contact" class="hover:text-emerald-600 transition-colors">Contact</a>
             </div>
 
@@ -38,6 +39,7 @@
                 <a href="#home" onclick="toggleMenu()" class="hover:text-emerald-600">Home</a>
                 <a href="#solutions" onclick="toggleMenu()" class="hover:text-emerald-600">Solutions</a>
                 <a href="#industries" onclick="toggleMenu()" class="hover:text-emerald-600">Industries</a>
+                <a href="#about" onclick="toggleMenu()" class="hover:text-emerald-600">About</a>
                 <a href="#contact" onclick="toggleMenu()" class="hover:text-emerald-600">Contact</a>
             </div>
         </div>
@@ -112,6 +114,22 @@
         </div>
     </section>
 
+    <!-- About Us -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-slate-800 mb-8">About RolitaPro Technologies LLC</h2>
+            <p class="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                We are a focused team of SaaS engineers who specialize in building high-quality, purpose-built software 
+                for micro-niche service businesses. Instead of generic tools that try to do everything, we create simple, 
+                powerful applications designed exactly for how your specific trade operates every day.
+            </p>
+            <p class="text-xl text-slate-600 leading-relaxed mt-8 max-w-3xl mx-auto">
+                Our goal is straightforward: make your daily operations smoother, your customers happier, 
+                and your business more profitable — one tailored SaaS solution at a time.
+            </p>
+        </div>
+    </section>
+
     <!-- Contact Form -->
     <section id="contact" class="py-24 bg-slate-900 text-white">
         <div class="max-w-2xl mx-auto px-6 text-center">
@@ -136,11 +154,13 @@
     </footer>
 
     <script>
+        // ================== YOUR API KEYS ==================
         const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY;   // ← PASTE YOUR SUPABASE ANON KEY HERE
 
-        const RESEND_API_KEY = 're_f1spR22U_J1U7Q9UJy1sbdpd4GJTT7CgS;   // ← PASTE YOUR RESEND API KEY HERE
+        const RESEND_API_KEY = 're_f1spR22U_J1U7Q9UJy1sbdpd4GJTT7CgS;      // ← PASTE YOUR RESEND API KEY HERE
 
+        // ================== FORM LOGIC ==================
         const form = document.getElementById('contactForm');
         const status = document.getElementById('status');
         const submitBtn = document.getElementById('submitBtn');
@@ -183,7 +203,7 @@
                     },
                     body: JSON.stringify({
                         from: 'RolitaPro <onboarding@resend.dev>',
-                        to: ['rtarver51@gmail.com'],           // ← Your email
+                        to: ['rtarver51@gmail.com'],           // ← Change to your real email
                         subject: `New Contact Form from ${name}`,
                         html: `
                             <h2>New Contact Form Submission</h2>
@@ -197,7 +217,6 @@
                     })
                 });
 
-                console.log("Resend response status:", emailRes.status);
                 if (dbRes.ok && emailRes.ok) {
                     status.innerHTML = '<span class="text-emerald-400 font-medium">✅ Message sent successfully! Thank you.</span>';
                     form.reset();
