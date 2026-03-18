@@ -38,7 +38,6 @@
             </button>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
             <div class="px-6 py-8 flex flex-col gap-6 text-lg font-medium text-slate-700">
                 <a href="#home" onclick="toggleMenu()" class="hover:text-emerald-600">Home</a>
@@ -154,23 +153,29 @@
     </footer>
 
     <script>
-        // === YOUR SUPABASE SETTINGS ===
         const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY;   // ← PASTE YOUR FULL ANON KEY HERE BETWEEN THE QUOTES
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY;   // ← PASTE YOUR FULL ANON KEY HERE
 
         const form = document.getElementById('contactForm');
         const status = document.getElementById('status');
         const submitBtn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault();           // This prevents the page jump
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             status.textContent = '';
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                status.innerHTML = '<span class="text-red-400">❌ Please fill all fields.</span>';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+                return;
+            }
 
             try {
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
