@@ -153,10 +153,11 @@
         <p>© 2026 RolitaPro Technologies LLC. All rights reserved.</p>
     </footer>
 
-       <script>
+    <script>
         const SUPABASE_URL = 'https://ropvjcayvtyopcctygqv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvcHZqY2F5dnR5b3BjY3R5Z3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTI1NjcsImV4cCI6MjA4OTQyODU2N30.l0r8iLII21JXnukKXZJXv20e8Hx6SR0fS_RSs1ZdJVY';   // ← Your Supabase anon key
-        const RESEND_API_KEY = 're_f1spR22U_J1U7Q9UJy1sbdpd4GJTT7CgS';      // ← Your Resend API key
+        const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY_PLACEHOLDER';
+
+        const RESEND_API_KEY = 'RESEND_API_KEY_PLACEHOLDER';
 
         const form = document.getElementById('contactForm');
         const status = document.getElementById('status');
@@ -180,7 +181,6 @@
             }
 
             try {
-                console.log("Attempting to save to Supabase...");
                 const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
                     method: 'POST',
                     headers: {
@@ -191,18 +191,36 @@
                     body: JSON.stringify({ name, email, message })
                 });
 
-                console.log("Supabase response status:", dbRes.status);
+                const emailRes = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${RESEND_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        from: 'RolitaPro <onboarding@resend.dev>',
+                        to: ['rtarver51@gmail.com'],
+                        subject: `New Contact Form from ${name}`,
+                        html: `
+                            <h2>New Contact Form Submission</h2>
+                            <p><strong>Name:</strong> ${name}</p>
+                            <p><strong>Email:</strong> ${email}</p>
+                            <p><strong>Message:</strong></p>
+                            <p>${message.replace(/\n/g, '<br>')}</p>
+                            <hr>
+                            <p><small>Received at ${new Date().toLocaleString()}</small></p>
+                        `
+                    })
+                });
 
-                if (dbRes.ok) {
+                if (dbRes.ok && emailRes.ok) {
                     status.innerHTML = '<span class="text-emerald-400 font-medium">✅ Message sent successfully! Thank you.</span>';
                     form.reset();
                 } else {
-                    const errorText = await dbRes.text().catch(() => '');
-                    status.innerHTML = `<span class="text-red-400 font-medium">❌ Failed to save (${dbRes.status}). ${errorText}</span>`;
+                    status.innerHTML = '<span class="text-red-400 font-medium">❌ Failed to send. Please try again.</span>';
                 }
             } catch (err) {
                 status.innerHTML = '<span class="text-red-400 font-medium">❌ Could not connect to server. Please try again.</span>';
-                console.error("Error:", err);
             }
 
             submitBtn.disabled = false;
