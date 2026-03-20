@@ -18,17 +18,16 @@ jobs:
       - name: Replace placeholders
         env:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           python3 -c "
           import os
           with open('index.html', 'r') as f:
               content = f.read()
           content = content.replace('SUPABASE_ANON_KEY_PLACEHOLDER', os.environ['SUPABASE_ANON_KEY'].strip())
-          content = content.replace('RESEND_API_KEY_PLACEHOLDER', os.environ['RESEND_API_KEY'].strip())
           with open('index.html', 'w') as f:
               f.write(content)
           "
+
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
