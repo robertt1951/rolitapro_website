@@ -1,26 +1,29 @@
-name: Deploy to GitHub Pages with secrets
+name: Deploy RolitaPro Secure
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
+permissions:
+  contents: write  # Allows the Action to push to gh-pages
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Replace placeholders with secrets
-      run: |
-        sed -i "s|SUPABASE_ANON_KEY_PLACEHOLDER|${{ secrets.SUPABASE_ANON_KEY }}|g" index.html
-        sed -i "s|RESEND_API_KEY_PLACEHOLDER|${{ secrets.RESEND_API_KEY }}|g" index.html
+      - name: Replace placeholders with secrets
+        run: |
+          sed -i "s|SUPABASE_ANON_KEY_PLACEHOLDER|${{ secrets.SUPABASE_ANON_KEY }}|g" index.html
+          sed -i "s|RESEND_API_KEY_PLACEHOLDER|${{ secrets.RESEND_API_KEY }}|g" index.html
 
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
-        publish_branch: gh-pages
-        force_orphan: true
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./
+          branch: gh-pages
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
