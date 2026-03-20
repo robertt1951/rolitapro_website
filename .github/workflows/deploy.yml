@@ -1,4 +1,5 @@
-name: Deploy RolitaPro  Secure
+# Deploy RolitaPro Secure
+name: Deploy RolitaPro Secure
 
 on:
   push:
@@ -14,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-- name: Replace placeholders
+      - name: Replace placeholders
         env:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
@@ -28,6 +29,7 @@ jobs:
           with open('index.html', 'w') as f:
               f.write(content)
           "
+
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
