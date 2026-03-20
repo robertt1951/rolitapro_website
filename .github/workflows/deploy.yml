@@ -1,4 +1,4 @@
-name: Deploy RolitaPro Secure
+name: Deploy RolitaPro  Secure
 
 on:
   push:
