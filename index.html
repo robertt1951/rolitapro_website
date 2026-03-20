@@ -172,13 +172,21 @@
         const email = document.getElementById('email').value.trim();
         const message = document.getElementById('message').value.trim();
 
-        if (!name || !email || !message) {
-            status.innerHTML = '<span class="text-red-400">Please fill all fields.</span>';
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Send Message';
-            return;
-        }
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+if (!name || !email || !message) {
+    status.innerHTML = '<span class="text-red-400">Please fill all fields.</span>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+    return;
+}
+
+if (!emailRegex.test(email)) {
+    status.innerHTML = '<span class="text-red-400">Please enter a valid email address.</span>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+    return;
+}
         try {
             // Save to Supabase DB
             const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
