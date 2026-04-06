@@ -18,7 +18,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'RolitaPro <onboarding@resend.dev>',
         // Sending to both Gmail and Verizon Phone
-        to: ['rtarver51@gmail.com', 'YOUR_10_DIGIT_NUMBER@vtext.com'], 
+        to: ['rtarver51@gmail.com', '3188208464@vtext.com'], 
         subject: 'RP Alert',
         text: tacticalString,
       }),

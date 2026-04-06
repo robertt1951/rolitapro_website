@@ -6,8 +6,8 @@ serve(async (req) => {
   try {
     const { record } = await req.json()
 
-    // Your Tactical String: RP|Name|Event|Time|URL
-    const tacticalString = `RP|${record.name || 'User'}|"New Table Entry"|${new Date().toLocaleTimeString()}|https://rolitapro.com`
+    // Crafting your Tactical String: RP|Name|Message|Time|URL
+    const tacticalString = `RP|${record.name || 'New Entry'}|"New lead in RolitaPro"|${new Date().toLocaleTimeString()}|https://rolitapro.com`
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -16,19 +16,15 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'RolitaPro <onboarding@resend.dev>',
-        // Sending to both Gmail and Verizon Phone
-        to: ['rtarver51@gmail.com', 'YOUR_10_DIGIT_NUMBER@vtext.com'], 
-        subject: 'RP Alert',
+        from: 'RolitaPro <onboarding@resend.dev>', // You can customize this later with your domain
+        to: ['YOUR_PHONE_NUMBER@vtext.com'], // Replace with your actual number
+        subject: 'New Table Entry',
         text: tacticalString,
       }),
     })
 
     const data = await res.json()
-    return new Response(JSON.stringify(data), { 
-      status: 200, 
-      headers: { "Content-Type": "application/json" } 
-    })
+    return new Response(JSON.stringify(data), { status: 200 })
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), { status: 500 })
   }
